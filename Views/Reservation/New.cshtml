@@ -1,0 +1,72 @@
+﻿@model Reservation
+@{
+    ViewData["Title"] = "New";
+}
+    <script src="@Url.Content("~/js/site.js")" type="text/javascript"></script>
+<h2>Add new reservation</h2>
+
+<hr />
+<div class="col-md-4">
+    <form asp-action="New">
+
+        <form id="myForm">
+            <label for="booksDropdown"><b>Books Genres</b></label>
+            <select class="form-control" id="booksDropdown" name="booksDropdown"></select>
+        </form>
+        <form id="myForm">
+            <label for="booksDropdownTitle"><b>Books Names</b></label>
+            <select class="form-control" id="booksDropdownTitle" name="booksDropdownTitle"></select>
+        </form>
+
+        <div class="form-reservation">
+            <label asp-for="BookGenres" class="control-label"></label>
+            <br />
+            <select class="btn-primary" asp-for="bookGenre" asp-items="Model.BookGenres" id="genres-target">
+                <option value="All">All</option>
+            </select>
+
+            <span asp-validation-for="BookGenres" class="text-danger"></span>
+
+        </div>
+        <br />
+
+        <div class="form-reservation-selectlist">
+            <label asp-for="BookNames" class="control-label"></label>
+            <br />
+            <select class="btn-primary" asp-for="BookId" asp-items="Model.BookNames" id="names-target"></select>
+            <br />
+            <span asp-validation-for="BookNames" class="text-danger"></span>
+        </div>
+        <br />
+
+        <div class="form-reservation">
+            <label asp-for="ReservationDate" class="control-label"></label>
+            <input asp-for="ReservationDate" class="form-control" maxlength="10" />
+            <span asp-validation-for="ReservationDate" class="text-danger"></span>
+        </div>
+        <br />
+
+        <div class="form-reservation">
+            <label asp-for="ReturnDate" class="control-label"></label>
+            <input asp-for="ReturnDate" class="form-control" />
+            <span asp-validation-for="ReturnDate" class="text-danger"></span>
+        </div>
+        <br />
+
+        <div class="form-reservation">
+            <input type="submit" value="New" class="btn btn-primary" />
+        </div>
+
+        @*<div class="form-reservation">
+            <input type="submit" value="Test" class="btn btn-primary" id="btnSubmit" />
+        </div>*@
+
+        <div class="form-reservation">
+            <p>@ViewBag.ErrorMessage</p>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
