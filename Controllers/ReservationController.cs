@@ -63,8 +63,9 @@ namespace MvcBook.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> New(int id, string bookGenre, [Bind("Title,BookId,ReservationDate,ReturnDate")] Reservation reservation)
+        public async Task<IActionResult> New(int id, string bookGenre,  [Bind("Title,BookId,ReservationDate,ReturnDate")] Reservation reservation, string genrebookres, string titlebookres)
         {
+
             var resDate = from m in _context.Reservation
                           select m;
             //{

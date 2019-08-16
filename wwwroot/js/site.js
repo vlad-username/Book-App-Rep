@@ -21,7 +21,6 @@ $(document).ready(function () {
             
             $("#booksDropdown").change(function () {
                 var GenreOption = $("#booksDropdown :selected").text();
-
                 if (GenreOption == 'Please Select a Genre')
                     $("#myForm2").hide();
                 else
@@ -35,24 +34,26 @@ $(document).ready(function () {
                     }
                     $("#booksDropdownTitle").html(m);
             });
-            //$("#submitBtn").click(function () {
-            //    alert(" akshbf ");
-            //    $.ajax({
-            //        type: "POST",
-            //        url: "/Reservation/New",
-            //        data: "{}",
-            //        contentType: "application/json; charset=utf-8",
-            //        dataType: "json",
-            //        async: "true",
-            //        cache: "false",
-            //        success: function (msg) {
-            //            alert(" SUKKES ");                 
-            //        },
-            //        Error: function (x, e) {
-            //            // On Error
-            //        }
-            //    });
-            //});
+            $("#submitBtn").click(function () {
+            //alert(" 1 phase ");
+                
+                var genrebookajax = $("#booksDropdown :selected").val();
+                var titlebookajax = $("#booksDropdownTitle :selected").text();
+                //$.post("/Reservation/New", { genrebookres: "text" }, function (data) {
+                //    alert(data.toString());
+                //},);
+                //$.post("/Reservation/New", { titlebookres: titlebookajax }, function (data) {
+                //    alert(data.toString());
+                //},);
+                $.ajax({
+                    type: "POST",
+                    url: '/Reservation/New")',
+                    data: { genrebookres: genrebookajax, titlebookres: titlebookajax },
+                    success: function () {
+                        alert("Done!");
+                    }
+                });
+            });
         }
     });
 });  
