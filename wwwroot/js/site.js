@@ -8,25 +8,51 @@ $(document).ready(function () {
         type: "GET",
         url: "/Reservation/getGenre",
         data: "{}",
-        success: function (data) {
+        success: function (data, GenreOption) {
             var s = '<option value="-1">Please Select a Genre</option>';
+            var usedNames = [];
+            $("#myForm2").hide();
             for (var i = 0; i < data.length; i++) {
-                s += '<option value="' + data[i].Genre + '">' + data[i].Genre + '</option>';
+                if (usedNames.indexOf(data[i].Genre) == -1)
+                    s += '<option value="' + data[i].Genre + '">' + data[i].Genre + '</option>';
+                usedNames.push(data[i].Genre);
             }
             $("#booksDropdown").html(s);
-           // var GenreOption = document.getElementById("#booksDropdown");
-            var GenreOption = $("#booksDropdown :selected").val();
-           // var GenreOption = $("#booksDropdown").val();
+            
+            $("#booksDropdown").change(function () {
+                var GenreOption = $("#booksDropdown :selected").text();
 
-            var m = '<option value="-1">Please Select a Genre</option>';
-            for (var i = 0; i < data.length; i++) {
-                if (data[i].Genre == GenreOption) {
-                    m += '<option value="' + data[i].Title + '">' + data[i].Title + '</option>';
-                }
+                if (GenreOption == 'Please Select a Genre')
+                    $("#myForm2").hide();
+                else
+                    $("#myForm2").show();
                 
-            }
-            $("#booksDropdownTitle").html(m);
+                    var m = '<option value="-1">Please Select a Book</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].Genre == GenreOption) {
+                            m += '<option id="' + data[i].Genre + '" value="' + data[i].Id + '">' + data[i].Title + '</option>';
+                        }
+                    }
+                    $("#booksDropdownTitle").html(m);
+            });
+            //$("#submitBtn").click(function () {
+            //    alert(" akshbf ");
+            //    $.ajax({
+            //        type: "POST",
+            //        url: "/Reservation/New",
+            //        data: "{}",
+            //        contentType: "application/json; charset=utf-8",
+            //        dataType: "json",
+            //        async: "true",
+            //        cache: "false",
+            //        success: function (msg) {
+            //            alert(" SUKKES ");                 
+            //        },
+            //        Error: function (x, e) {
+            //            // On Error
+            //        }
+            //    });
+            //});
         }
     });
-    
 });  

@@ -67,32 +67,32 @@ namespace MvcBook.Controllers
         {
             var resDate = from m in _context.Reservation
                           select m;
-            {
-                var books = from m in _context.Book
-                            select m;
-                var bookQueryGenre = from m in _context.Book
-                                     select m.Genre;
+            //{
+            //    var books = from m in _context.Book
+            //                select m;
+            //    var bookQueryGenre = from m in _context.Book
+            //                         select m.Genre;
                                      
-                SelectList myGenres = new SelectList(await bookQueryGenre.Distinct().ToListAsync());
+            //    SelectList myGenres = new SelectList(await bookQueryGenre.Distinct().ToListAsync());
 
 
-                //var items = await books.Select(x => x).Where(x => x.Genre == bookGenre).ToListAsync();
-                //var filterdItems = items.Where(s => s.Genre == bookGenre);
-                //SelectList myTitle = new SelectList(items, "Id", "Title");
-                if (bookGenre != "All")
-                {
-                    SelectList myTitle = new SelectList(await books.Where(s => s.Genre == bookGenre).ToListAsync(), "Id", "Title");
-                    reservation.BookNames = myTitle;
-                }
-                else
-                {
-                    SelectList myTitle = new SelectList(await books.ToListAsync(), "Id", "Title");
-                    reservation.BookNames = myTitle;
-                }
+            //    //var items = await books.Select(x => x).Where(x => x.Genre == bookGenre).ToListAsync();
+            //    //var filterdItems = items.Where(s => s.Genre == bookGenre);
+            //    //SelectList myTitle = new SelectList(items, "Id", "Title");
+            //    if (bookGenre != "All")
+            //    {
+            //        SelectList myTitle = new SelectList(await books.Where(s => s.Genre == bookGenre).ToListAsync(), "Id", "Title");
+            //        reservation.BookNames = myTitle;
+            //    }
+            //    else
+            //    {
+            //        SelectList myTitle = new SelectList(await books.ToListAsync(), "Id", "Title");
+            //        reservation.BookNames = myTitle;
+            //    }
 
-                reservation.BookGenres = myGenres;
+            //    reservation.BookGenres = myGenres;
                 
-            }
+            //}
             
             if (id != reservation.Id)
             {
@@ -152,6 +152,7 @@ namespace MvcBook.Controllers
             return Json(_context.Book.Select(x => new
             {
                 Genre = x.Genre,
+                Id = x.Id,
                 Title = x.Title
             }).ToList().Distinct(), new Newtonsoft.Json.JsonSerializerSettings { ContractResolver = new DefaultContractResolver()});
         }

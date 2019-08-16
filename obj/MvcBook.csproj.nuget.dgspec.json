@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Vlad S\\source\\repos\\book-app-mvc\\MvcBook.csproj": {}
+    "C:\\Users\\Vlad S\\source\\repos\\Book-App-Rep\\MvcBook.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Vlad S\\source\\repos\\book-app-mvc\\MvcBook.csproj": {
+    "C:\\Users\\Vlad S\\source\\repos\\Book-App-Rep\\MvcBook.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Vlad S\\source\\repos\\book-app-mvc\\MvcBook.csproj",
+        "projectUniqueName": "C:\\Users\\Vlad S\\source\\repos\\Book-App-Rep\\MvcBook.csproj",
         "projectName": "MvcBook",
-        "projectPath": "C:\\Users\\Vlad S\\source\\repos\\book-app-mvc\\MvcBook.csproj",
+        "projectPath": "C:\\Users\\Vlad S\\source\\repos\\Book-App-Rep\\MvcBook.csproj",
         "packagesPath": "C:\\Users\\Vlad S\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Vlad S\\source\\repos\\book-app-mvc\\obj\\",
+        "outputPath": "C:\\Users\\Vlad S\\source\\repos\\Book-App-Rep\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
