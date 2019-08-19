@@ -9,7 +9,7 @@
 <div class="col-md-4">
     <form asp-action="New">
 
-        <div class="form-reservation" id="myForm1">
+        @*<div class="form-reservation" id="myForm1">
             <label for="BookGenres"><b>Books Genres</b></label>
             <select class="form-control dropdown" id="booksDropdown" name="booksDropdown" asp-for="bookGenre" asp-items="Model.BookGenres"></select>
             <span asp-validation-for="BookGenres" class="text-danger"></span>
@@ -22,29 +22,28 @@
             <select class="form-control dropdown" id="booksDropdownTitle" name="booksDropdownTitle" asp-for="BookId" asp-items="Model.BookNames"></select>
             <span asp-validation-for="BookNames" class="text-danger"></span>
             <br />
-        </div>
+        </div>*@
         
 
-        @*<div class="form-reservation">
+        <div class="form-reservation" id="myForm1">
             <label asp-for="BookGenres" class="control-label"></label>
             <br />
-            <select class="btn-primary" asp-for="bookGenre" asp-items="Model.BookGenres" id="genres-target">
-                <option value="All">All</option>
+            <select class="btn-primary" id="booksDropdownGenres" asp-for="bookGenre" asp-items="Model.BookGenres">
+                <option value="All">Please select a genre</option>
             </select>
-
             <span asp-validation-for="BookGenres" class="text-danger"></span>
 
         </div>
         <br />
 
-        <div class="form-reservation-selectlist">
+        <div class="form-reservation-selectlist" id="myForm2">
             <label asp-for="BookNames" class="control-label"></label>
             <br />
-            <select class="btn-primary" asp-for="BookId" asp-items="Model.BookNames" id="names-target"></select>
+            <select class="btn-primary" id="booksDropdownTitle" name="booksDropdownTitle" asp-for="BookId" asp-items="Model.BookNames" ></select>
             <br />
             <span asp-validation-for="BookNames" class="text-danger"></span>
         </div>
-        <br />*@
+        <br />
 
         <div class="form-reservation">
             <label asp-for="ReservationDate" class="control-label"></label>
