@@ -200,3 +200,5 @@ C:\Users\Vlad S\source\repos\Book-App-Rep\obj\Debug\netcoreapp2.2\MvcBook.Views.
 C:\Users\Vlad S\source\repos\Book-App-Rep\obj\Debug\netcoreapp2.2\MvcBook.dll
 C:\Users\Vlad S\source\repos\Book-App-Rep\obj\Debug\netcoreapp2.2\MvcBook.pdb
 C:\Users\Vlad S\source\repos\Book-App-Rep\obj\Debug\netcoreapp2.2\MvcBook.csproj.CopyComplete
+C:\Users\Vlad S\source\repos\Book-App-Rep\obj\Debug\netcoreapp2.2\MvcBook.csprojAssemblyReference.cache
+C:\Users\Vlad S\source\repos\Book-App-Rep\obj\Debug\netcoreapp2.2\Razor\Views\Reservation\Delete.g.cshtml.cs

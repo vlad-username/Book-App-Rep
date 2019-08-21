@@ -48,7 +48,7 @@ namespace MvcBook.Controllers
 
             //SelectList myTitle = new SelectList(items, "Id", "Title");
             SelectList myTitle = new SelectList(await books.ToListAsync(), "Id", "Title");
-
+            
 
             //books = books.Where(m => m.Genre == bookQueryGenre);
             //.Where(m => m.Genre == myModel.BookGenres.ToString())
@@ -64,20 +64,19 @@ namespace MvcBook.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> New(int id, string bookGenre,int BookId,  [Bind("Title,BookId,ReservationDate,ReturnDate")] Reservation reservation)
+        public async Task<IActionResult> New(int id, string bookGenre,int BookId,string title,  [Bind("Title,BookId,ReservationDate,ReturnDate")] Reservation reservation)
         {
 
             var resDate = from m in _context.Reservation
                           select m;
+            var books = from m in _context.Book
+                        select m;
+            var bookQueryGenre = from m in _context.Book
+                                 select m.Genre;
             {
-                var books = from m in _context.Book
-                            select m;
-                //var bookQueryGenre = from m in _context.Book
-                //                     select m.Genre;
+                SelectList myGenres = new SelectList(await bookQueryGenre.Distinct().ToListAsync());
 
-                //SelectList myGenres = new SelectList(await bookQueryGenre.Distinct().ToListAsync());
-
-
+                reservation.BookGenres = myGenres;
                 //var items = await books.Select(x => x).Where(x => x.Genre == bookGenre).ToListAsync();
                 //var filterdItems = items.Where(s => s.Genre == bookGenre);
                 //SelectList myTitle = new SelectList(items, "Id", "Title");
@@ -93,48 +92,72 @@ namespace MvcBook.Controllers
                 }
             }
 
-            var bookQueryGenre = from m in _context.Book
-                                 select m.Genre;
-            SelectList myGenres = new SelectList(await bookQueryGenre.Distinct().ToListAsync());
-            reservation.BookGenres = myGenres;
-                
-            
-            
             if (id != reservation.Id)
             {
                 return NotFound();
             }
             if (ModelState.IsValid)
             {  
+
                 try
                 {
                     if (resDate.Any(m => m.BookId == reservation.BookId))
                     {
-                        if (!resDate.Any(m => m.ReservationDate == reservation.ReservationDate) && !resDate.Any(m => m.BookId == reservation.BookId))
+                        if (!(reservation.ReservationDate > reservation.ReturnDate))
                         {
-                            if (reservation.ReservationDate <= reservation.ReturnDate)
+
+                            //   List<Element> _context.Reservation = BuildList();
+                            bool i = true;
+                            var bookQueryres = from m in _context.Reservation
+                                               where m.BookId == BookId
+                                               select m;
+                            foreach (var item in bookQueryres)
+                            {
+
+                                if (((reservation.ReservationDate >= item.ReturnDate) && (reservation.ReturnDate > reservation.ReservationDate))
+                                    || ((reservation.ReturnDate <= item.ReservationDate) && (reservation.ReturnDate > reservation.ReservationDate)))
+                                {
+
+                                }
+                                else {
+                                    i = false;
+                                    break;
+                                }
+                            }
+                            if (i == true)
                             {
                                 _context.Add(reservation);
                                 await _context.SaveChangesAsync();
                                 return RedirectToAction(nameof(Index));
                             }
-                            else
-                                ViewBag.ErrorMessage = "Return Date is not valid, please check !";
+                            else {
+                                ViewBag.ErrorMessage = "Reservation is not valid, please check !";
+                            }
+
+
+                            //if ((bookQueryres.Any(m => m.ReservationDate > reservation.ReservationDate)) || (bookQueryres.Any(m => m.ReturnDate < reservation.ReservationDate)) && (bookQueryres.Any(m => m.ReturnDate < reservation.ReservationDate)) || (bookQueryres.Any(m => m.ReservationDate < reservation.ReturnDate)))
+
+                            //var startdate = bookQueryres.Where(m => m.ReservationDate); 
+                            //{
+                            //    _context.Add(reservation);
+                            //    await _context.SaveChangesAsync();
+                            //    return RedirectToAction(nameof(Index));
+                            //}
                         }
                         else {
-                            ViewBag.ErrorMessage = "Reservation Date for this book is not valid !";
-
+                            ViewBag.ErrorMessage = "Reservation is not valid, please check !";
                         }
                     }
-                    else if (reservation.ReservationDate <= reservation.ReturnDate)
+                    else if (!(reservation.ReservationDate < reservation.ReturnDate)) {
+                        ViewBag.ErrorMessage = "ReturnDate is not valid, please check !";
+                    }
+                    else
                     {
                         _context.Add(reservation);
                         await _context.SaveChangesAsync();
                         return RedirectToAction(nameof(Index));
                     }
-                    else {
-                        ViewBag.ErrorMessage = "Return Date is not valid, please check !";
-                    }
+                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -162,7 +185,34 @@ namespace MvcBook.Controllers
                 Title = x.Title
             }).ToList(), new Newtonsoft.Json.JsonSerializerSettings { ContractResolver = new DefaultContractResolver()});
         }
+        // GET: Books/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var book = await _context.Reservation
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            return View(book);
+        }
+
+        // POST: Books/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var book = await _context.Reservation.FindAsync(id);
+            _context.Reservation.Remove(book);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
 
         private bool ReservationExists(int id)
