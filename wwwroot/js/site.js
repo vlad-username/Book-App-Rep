@@ -6,9 +6,9 @@
 
 $(document).ready(function ()
 {
-    
+    // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     var GenreOption = $("#booksDropdownGenres :selected").val();
-    if (GenreOption != 'All') {
+    if (GenreOption != '-2') {
         $.ajax
             ({
                 type: "GET",
@@ -19,7 +19,7 @@ $(document).ready(function ()
                     var GenreOption = $("#booksDropdownGenres :selected").text();
                     for (var i = 0; i < data.length; i++) {
                         if (data[i].Genre == GenreOption)
-                            m += '<option id="' + data[i].Id + '" value="' + data[i].Genre + '">' + data[i].Title + '</option>';
+                            m += '<option value="' + data[i].Id + '">' + data[i].Title + '</option>';
                     }
                     $("#booksDropdownTitle").html(m);
                 }
@@ -32,7 +32,7 @@ $(document).ready(function ()
     {
         var GenreOption = $("#booksDropdownGenres :selected").val();
         
-        if (GenreOption == 'All')
+        if (GenreOption == '-2')
             $("#myForm2").hide();
         else
             $("#myForm2").fadeIn().show();
@@ -46,32 +46,32 @@ $(document).ready(function ()
                     var GenreOption = $("#booksDropdownGenres :selected").text();
                     for (var i = 0; i < data.length; i++) {
                         if (data[i].Genre == GenreOption)
-                            m += '<option value="' + data[i].Id + '" value="' + data[i].Genre + '">' + data[i].Title + '</option>';
+                            m += '<option value="' + data[i].Id + '">' + data[i].Title + '</option>';
                     }
                     $("#booksDropdownTitle").html(m);
                 }
             });
     });
-    $("#submitBtn").click(function () {
-        //alert(" 1 phase ");
-        var idofbook = $("#booksDropdownTitle :selected").attr('id');
+    //$("#submitBtn").click(function () {
+    //    //alert(" 1 phase ");
+    //    var idofbook = $("#booksDropdownTitle :selected").attr('id');
 
-        //$.post("/Reservation/New", { A: genrebookajax }, function (data) {
-        //    alert(data.toString());
-        //},);
-        //$.post("/Reservation/New", { B: titlebookajax }, function (data) {
-        //    alert(data.toString());
-        //},);
-        $.ajax({
-            type: "POST",
-            url: "/Reservation/New",
-            data: JSON.stringify({ BookId : idofbook}),
-            dataType: 'json',
-            success: function () {
-                alert("Done!");
-            }
-        });
-    });
+    //    //$.post("/Reservation/New", { A: genrebookajax }, function (data) {
+    //    //    alert(data.toString());
+    //    //},);
+    //    //$.post("/Reservation/New", { B: titlebookajax }, function (data) {
+    //    //    alert(data.toString());
+    //    //},);
+    //    //$.ajax({
+    //    //    type: "POST",
+    //    //    url: "/Reservation/New",
+    //    //    data: JSON.stringify({ BookId : idofbook}),
+    //    //    dataType: 'json',
+    //    //    success: function () {
+    //    //        alert("Done!");
+    //    //    }
+    //    //});
+    //});
 });
 
 

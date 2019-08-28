@@ -24,6 +24,7 @@ namespace MvcBook.Models
         [NotMapped]
         public SelectList BookGenres { get; set; }
 
+        [NotMapped]
         public String bookGenre { get; set; }
 
         public int Id { get; set; }
@@ -34,5 +35,7 @@ namespace MvcBook.Models
         public int BookId { get; set; }
 
         public virtual Book Book { get; set; }
+
+
     }
 }

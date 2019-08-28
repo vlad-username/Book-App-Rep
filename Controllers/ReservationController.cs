@@ -64,7 +64,7 @@ namespace MvcBook.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> New(int id, string bookGenre,int BookId,string title,  [Bind("Title,BookId,ReservationDate,ReturnDate")] Reservation reservation)
+        public async Task<IActionResult> New(int id, string bookGenre,int BookId,  [Bind("Title,BookId,ReservationDate,ReturnDate")] Reservation reservation)
         {
 
             var resDate = from m in _context.Reservation
@@ -80,7 +80,7 @@ namespace MvcBook.Controllers
                 //var items = await books.Select(x => x).Where(x => x.Genre == bookGenre).ToListAsync();
                 //var filterdItems = items.Where(s => s.Genre == bookGenre);
                 //SelectList myTitle = new SelectList(items, "Id", "Title");
-                if (bookGenre != "All")
+                if (bookGenre != "-2")
                 {
                     SelectList myTitle = new SelectList(await books.Where(s => s.Genre == bookGenre).ToListAsync(), "Id", "Title");
                     reservation.BookNames = myTitle;
@@ -101,7 +101,7 @@ namespace MvcBook.Controllers
 
                 try
                 {
-                    if (resDate.Any(m => m.BookId == reservation.BookId))
+                    if (resDate.Any(m => m.BookId == reservation.BookId) && BookId != -1 && bookGenre != "-2")
                     {
                         if (!(reservation.ReservationDate > reservation.ReturnDate))
                         {
@@ -133,16 +133,6 @@ namespace MvcBook.Controllers
                             else {
                                 ViewBag.ErrorMessage = "Reservation is not valid, please check !";
                             }
-
-
-                            //if ((bookQueryres.Any(m => m.ReservationDate > reservation.ReservationDate)) || (bookQueryres.Any(m => m.ReturnDate < reservation.ReservationDate)) && (bookQueryres.Any(m => m.ReturnDate < reservation.ReservationDate)) || (bookQueryres.Any(m => m.ReservationDate < reservation.ReturnDate)))
-
-                            //var startdate = bookQueryres.Where(m => m.ReservationDate); 
-                            //{
-                            //    _context.Add(reservation);
-                            //    await _context.SaveChangesAsync();
-                            //    return RedirectToAction(nameof(Index));
-                            //}
                         }
                         else {
                             ViewBag.ErrorMessage = "Reservation is not valid, please check !";
@@ -151,6 +141,10 @@ namespace MvcBook.Controllers
                     else if (!(reservation.ReservationDate < reservation.ReturnDate)) {
                         ViewBag.ErrorMessage = "ReturnDate is not valid, please check !";
                     }
+                    else if (BookId == -1)
+                        ViewBag.ErrorMessage = "Please don't forget to choose a book !";
+                    else if (bookGenre == "-2")
+                        ViewBag.ErrorMessage = "Please don't forget to choose a genre !";
                     else
                     {
                         _context.Add(reservation);

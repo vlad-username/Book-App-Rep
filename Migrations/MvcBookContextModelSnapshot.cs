@@ -54,7 +54,7 @@ namespace MvcBook.Migrations
 
                     b.Property<DateTime>("ReturnDate");
 
-                    b.Property<string>("bookGenre");
+                    //b.Property<string>("bookGenre");
 
                     b.HasKey("Id");
 
