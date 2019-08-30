@@ -141,7 +141,7 @@ namespace MvcBook.Controllers
                     else if (!(reservation.ReservationDate < reservation.ReturnDate)) {
                         ViewBag.ErrorMessage = "ReturnDate is not valid, please check !";
                     }
-                    else if (BookId == -1)
+                    else if (BookId == -1 && bookGenre != "-2")
                         ViewBag.ErrorMessage = "Please don't forget to choose a book !";
                     else if (bookGenre == "-2")
                         ViewBag.ErrorMessage = "Please don't forget to choose a genre !";
@@ -187,14 +187,13 @@ namespace MvcBook.Controllers
                 return NotFound();
             }
 
-            var book = await _context.Reservation
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (book == null)
+            var books = await _context.Reservation.Include(b => b.Book).FirstOrDefaultAsync(m => m.Id == id);
+            if (books == null)
             {
                 return NotFound();
             }
 
-            return View(book);
+            return View(books);
         }
 
         // POST: Books/Delete/5
@@ -202,8 +201,8 @@ namespace MvcBook.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var book = await _context.Reservation.FindAsync(id);
-            _context.Reservation.Remove(book);
+            var books = await _context.Reservation.FindAsync(id);
+            _context.Reservation.Remove(books);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

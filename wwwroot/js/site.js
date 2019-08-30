@@ -9,21 +9,24 @@ $(document).ready(function ()
     // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     var GenreOption = $("#booksDropdownGenres :selected").val();
     if (GenreOption != '-2') {
-        $.ajax
-            ({
-                type: "GET",
-                url: "/Reservation/getGenre",
-                data: "{}",
-                success: function (data, GenreOption) {
-                    var m = '<option value="-1">Please Select a Book</option>';
-                    var GenreOption = $("#booksDropdownGenres :selected").text();
-                    for (var i = 0; i < data.length; i++) {
-                        if (data[i].Genre == GenreOption)
-                            m += '<option value="' + data[i].Id + '">' + data[i].Title + '</option>';
-                    }
-                    $("#booksDropdownTitle").html(m);
-                }
-            });
+        //$.ajax
+        //    ({
+        //        type: "GET",
+        //        url: "/Reservation/getGenre",
+        //        data: "{}",
+        //        success: function (data, GenreOption) {
+        //            var m = '<option value="-1">Please Select a Book</option>';
+        //            var GenreOption = $("#booksDropdownGenres :selected").text();
+        //            for (var i = 0; i < data.length; i++) {
+        //                if (data[i].Genre == GenreOption)
+        //                    m += '<option value="' + data[i].Id + '">' + data[i].Title + '</option>';
+        //            }
+        //            var TitleOption = $("#booksDropdownTitle :selected").text();
+                    
+        //            $("#booksDropdownTitle").html(m);
+        //            $('#booksDropdownTitle').val(TitleOption);
+        //        }
+        //    });
     }   
     else {
         $("#myForm2").hide();
@@ -50,7 +53,9 @@ $(document).ready(function ()
                     }
                     $("#booksDropdownTitle").html(m);
                 }
+                
             });
+        
     });
     //$("#submitBtn").click(function () {
     //    //alert(" 1 phase ");
